@@ -240,7 +240,7 @@ func filterPath(s interface{}, p string) interface{} {
 	return pathValue(strings.Split(p, "."), s, "")
 }
 
-func toAbs(float float32) float32 {
+func toAbs(float float64) float64 {
 	if float < 0 {
 		float = float * -1
 	}
