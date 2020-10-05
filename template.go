@@ -58,6 +58,7 @@ var fmap = template.FuncMap{
 	"timeformatminus": timeFormatMinus,
 	"timestamp":       timestamp,
 	"title":           strings.Title,
+	"toAbs":           toAbs,
 	"tojson":          jsonDecode, // backward compatibility
 	"toLower":         strings.ToLower,
 	"toUpper":         strings.ToUpper,
