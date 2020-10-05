@@ -239,3 +239,10 @@ func last(x int, a interface{}) bool {
 func filterPath(s interface{}, p string) interface{} {
 	return pathValue(strings.Split(p, "."), s, "")
 }
+
+func toAbs(float float32) float32 {
+	if float < 0 {
+		float = float * -1
+	}
+	return float
+}
