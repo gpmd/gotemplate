@@ -73,6 +73,7 @@ var fmap = template.FuncMap{
 	"xml_array":       xmlArray,
 	"xml_decode":      xmlDecode,
 	"xml_encode":      xmlEncode,
+	"xml":             xmlEncode,
 }
 
 // RegisterFunc registers a new template func to the template parser
