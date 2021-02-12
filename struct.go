@@ -16,7 +16,33 @@ func jsonEncode(v interface{}) (string, error) {
 	return string(b), err
 }
 
-func xmlEncode(v interface{}) (string, error) {
+func xmlEncode(v interface{}, args ...string) (string, error) {
+	if str, ok := v.(string); ok {
+		return "<![CDATA[" + str + "]]>", nil
+	}
+	if fl, ok := v.(float64); ok {
+		return strconv.FormatFloat(fl, 'f', 4, 64), nil
+	}
+	if fl, ok := v.(int64); ok {
+		return strconv.FormatInt(fl, 64), nil
+	}
+	if fl, ok := v.(int); ok {
+		return strconv.Itoa(fl), nil
+	}
+	if arr, ok := v.([]interface{}); ok {
+		itemtag := "item"
+		roottag := "items"
+		if len(args) > 0 {
+			itemtag = args[0]
+		}
+		if len(args) > 1 {
+			roottag = args[1]
+		}
+		mv := mxj.Map(map[string]interface{}{itemtag: arr})
+		mxj.XMLEscapeChars(true)
+		b, err := mv.XmlIndent("", "  ", roottag)
+		return string(b), err
+	}
 	mv := mxj.Map(v.(map[string]interface{}))
 	mxj.XMLEscapeChars(true)
 	b, err := mv.Xml()

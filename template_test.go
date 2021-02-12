@@ -27,6 +27,36 @@ func TestTemplate(t *testing.T) {
 			Values:   map[string]interface{}{"A": []interface{}{map[string]interface{}{"z": 1, "p": "a & b"}, map[string]interface{}{"z": 2, "p": "b"}}},
 			Result:   "<?xml version=\"1.0\"?>\n<products>\n  <product>\n    <p>a &amp; b</p>\n    <z>1</z>\n  </product>\n  <product>\n    <p>b</p>\n    <z>2</z>\n  </product>\n</products>",
 		},
+		"xml_encode array no tags": {
+			Template: `{{xml_encode .A}}`,
+			Values:   map[string]interface{}{"A": []interface{}{map[string]interface{}{"z": 1, "p": "a & b"}, map[string]interface{}{"z": 2, "p": "b"}}},
+			Result:   "<items>\n  <item>\n    <p>a &amp; b</p>\n    <z>1</z>\n  </item>\n  <item>\n    <p>b</p>\n    <z>2</z>\n  </item>\n</items>",
+		},
+		"xml_encode array itemtag": {
+			Template: `{{xml_encode .A "product"}}`,
+			Values:   map[string]interface{}{"A": []interface{}{map[string]interface{}{"z": 1, "p": "a & b"}, map[string]interface{}{"z": 2, "p": "b"}}},
+			Result:   "<items>\n  <product>\n    <p>a &amp; b</p>\n    <z>1</z>\n  </product>\n  <product>\n    <p>b</p>\n    <z>2</z>\n  </product>\n</items>",
+		},
+		"xml_encode array itemtag roottags": {
+			Template: `{{xml_encode .A "product" "products"}}`,
+			Values:   map[string]interface{}{"A": []interface{}{map[string]interface{}{"z": 1, "p": "a & b"}, map[string]interface{}{"z": 2, "p": "b"}}},
+			Result:   "<products>\n  <product>\n    <p>a &amp; b</p>\n    <z>1</z>\n  </product>\n  <product>\n    <p>b</p>\n    <z>2</z>\n  </product>\n</products>",
+		},
+		"xml_encode string": {
+			Template: `{{xml_encode .A}}`,
+			Values:   map[string]interface{}{"A": "something"},
+			Result:   "<![CDATA[something]]>",
+		},
+		"xml_encode float": {
+			Template: `{{xml_encode .A}}`,
+			Values:   map[string]interface{}{"A": 1.123},
+			Result:   "1.1230",
+		},
+		"xml_encode int": {
+			Template: `{{xml_encode .A}}`,
+			Values:   map[string]interface{}{"A": 1},
+			Result:   "1",
+		},
 		"json_escape": {
 			Template: `{{json_escape .A}}`,
 			Values: map[string]interface{}{"A": `dog "fish"
@@ -243,7 +273,7 @@ func TestTemplate(t *testing.T) {
 	for name, test := range tests {
 		res, err := Template(test.Template, test.Values)
 		if err != nil {
-			panic(err)
+			t.Errorf("%s: %v", name, err)
 		}
 		if res != test.Result {
 			t.Errorf("%s: %#v != %#v", name, res, test.Result)
