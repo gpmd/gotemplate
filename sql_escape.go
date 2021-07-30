@@ -10,6 +10,9 @@ import (
 
 // provided template func
 func sqlEscape(q interface{}) string {
+	if q == nil {
+		return "NULL"
+	}
 	return sqlEscapeType(reflect.ValueOf(q))
 }
 
