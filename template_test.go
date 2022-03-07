@@ -33,17 +33,17 @@ func TestTemplate(t *testing.T) {
 			Result:   "<items>\n  <item>\n    <p>a &amp; b</p>\n    <z>1</z>\n  </item>\n  <item>\n    <p>b</p>\n    <z>2</z>\n  </item>\n</items>",
 		},
 		"xml_encode array itemtag": {
-			Template: `{{xml_encode .A "product"}}`,
+			Template: `{{xml .A "product"}}`,
 			Values:   map[string]interface{}{"A": []interface{}{map[string]interface{}{"z": 1, "p": "a & b"}, map[string]interface{}{"z": 2, "p": "b"}}},
 			Result:   "<items>\n  <product>\n    <p>a &amp; b</p>\n    <z>1</z>\n  </product>\n  <product>\n    <p>b</p>\n    <z>2</z>\n  </product>\n</items>",
 		},
 		"xml_encode array itemtag roottags": {
-			Template: `{{xml_encode .A "product" "products"}}`,
+			Template: `{{xml .A "product" "products"}}`,
 			Values:   map[string]interface{}{"A": []interface{}{map[string]interface{}{"z": 1, "p": "a & b"}, map[string]interface{}{"z": 2, "p": "b"}}},
 			Result:   "<products>\n  <product>\n    <p>a &amp; b</p>\n    <z>1</z>\n  </product>\n  <product>\n    <p>b</p>\n    <z>2</z>\n  </product>\n</products>",
 		},
 		"xml_encode string": {
-			Template: `{{xml_encode .A}}`,
+			Template: `{{xml .A}}`,
 			Values:   map[string]interface{}{"A": "something"},
 			Result:   "<![CDATA[something]]>",
 		},

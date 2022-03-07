@@ -120,15 +120,6 @@ func unique(e []interface{}) []interface{} {
 	return r
 }
 
-func contains(e []string, c string) bool {
-	for _, s := range e {
-		if s == c {
-			return true
-		}
-	}
-	return false
-}
-
 func item(s, sep string, num int) string {
 	i := strings.Split(s, sep)
 	if len(i) <= num {

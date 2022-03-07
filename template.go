@@ -12,7 +12,8 @@ var flock = sync.Mutex{}
 
 var fmap = template.FuncMap{
 	"add":             add,
-	"concat":          concat, // concat "a" "b" => "ab"
+	"concat":          concat,   // concat "a" "b" => "ab"
+	"contains":        contains, // contains "a" "abc" => true
 	"createMap":       createMap,
 	"date":            dateFmt, // "2017-03-31 19:59:11" |  date "06.01.02" => "17.03.31"
 	"dateFrom":        dateFmtLayout,
@@ -28,6 +29,8 @@ var fmap = template.FuncMap{
 	"fixlenr":         fixlenright,
 	"float":           tofloat, // float "0123.234" => 123.234
 	"formatUKDate":    formatUKDate,
+	"hasPrefix":       hasPrefix,   // hasPrefix "a" "ab" => true
+	"hasSuffix":       hasSuffix,   // hasSuffix "a" "ba" => true
 	"ifthen":          conditional, // ifthen "a" "b" => a, ifthen "" "b" => b
 	"in_array":        inArray,
 	"int":             toint, // int "0123" => 123

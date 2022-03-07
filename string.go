@@ -154,3 +154,15 @@ func notconditional(s1, s2 string) string {
 	}
 	return s2
 }
+
+func contains(substr string, str string) bool {
+	return strings.Contains(str, substr)
+}
+
+func hasPrefix(substr string, str string) bool {
+	return strings.HasPrefix(str, substr)
+}
+
+func hasSuffix(substr string, str string) bool {
+	return strings.HasSuffix(str, substr)
+}
