@@ -45,6 +45,7 @@ var fmap = template.FuncMap{
 	"lower":           strings.ToLower,
 	"mapto":           mapto, // mapto "a" "a:True|b:False" "|:" => True
 	"match":           regexp.MatchString,
+	"regexpReplace":   regReplaceAll, // regexpReplace "[^a-zA-Z0-9]" "!as.d?f12∂3" => "asdf123"
 	"md5":             md5hash,
 	"mkSlice":         mkSlice,
 	"mul":             multiply,

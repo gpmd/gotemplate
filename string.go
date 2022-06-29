@@ -166,3 +166,7 @@ func hasPrefix(substr string, str string) bool {
 func hasSuffix(substr string, str string) bool {
 	return strings.HasSuffix(str, substr)
 }
+
+func regReplaceAll(replaceRegex, input string) string {
+	return regexp.MustCompile(replaceRegex).ReplaceAllString(input, "")
+}
